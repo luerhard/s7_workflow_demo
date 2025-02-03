@@ -23,7 +23,6 @@
           };
           overlays = [
             (import ./nix/python-overlay.nix)
-            (import ./nix/system-overlay.nix)
           ];
         };
 
@@ -34,8 +33,6 @@
           R # necessary, otherwise no package is found in R
           pandoc
           ruff
-          python3Packages.papermill
-          dvc
         ];
 
         # Linux CUDA deps.
@@ -59,30 +56,35 @@
         ];
 
         # all python packages go here
-        pyEnv = pkgs.python311.withPackages (
+        pythonEnv = pkgs.python311.withPackages (
           ppkgs: with ppkgs; [
             pip # important for reticulate
+            jupyter # important for ipykernel dependencies. Otherwise papermill stuff gets on path.
             ipykernel # important for jupyter integration
-            matplotlib
-            pandas
+            papermill
+            dvc
             pytest
-          ]
+            pandas
+            matplotlib
+            scikit-learn
+          ] ++ dvc.optional-dependencies.s3
         );
 
       in
       {
         defaultPackage = pkgs.mkShell {
           packages = [
-            pyEnv # needs to be @ top of list, so the correct python interpreter is exposed
+            pythonEnv # needs to be @ top of list, so the correct python interpreter is exposed
             rEnv
             # linuxCudaDeps
             systemDeps
           ];
 
           ldLibPath = if system == "x86_64-linux" then "${pkgs.linuxPackages.nvidia_x11}/lib" else "";
+          pythonLibPath = "${pythonEnv}/lib/python3.11/site-packages/";
 
           shellHook = ''
-                      export PYTHONPATH="$(pwd):$PYTHONPATH"
+                      export PYTHONPATH="$(pwd):$pythonLibPath:$PYTHONPATH"
                       # export LD_LIBRARY_PATH="$ldLibPath:$LD_LIBRARY_PATH"
                       export RETICULATE_PYTHON=$(which python)
             	  '';
