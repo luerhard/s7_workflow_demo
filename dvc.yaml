@@ -8,13 +8,26 @@ stages:
     outs:
       - reports/notebooks/01-basic_descriptives.ipynb
       - reports/tables/raw_descriptives.csv
-  run_model:
-    cmd: Rscript -e "rmarkdown::render('pipeline/02-run_model.Rmd', 'html_document', '../reports/notebooks/02-run_model.html')"
+  preprocess:
+    cmd: python pipeline/02-preprocess.py
     deps:
-      - pipeline/02-run_model.Rmd
-      - data/raw/
-      - src/load.py
-      - src/preprocessing.py
+      - pipeline/02-preprocess.py
+      - data/raw
     outs:
-      - reports/notebooks/02-run_model.html
+      - data/interim/interim.parquet
+  run_model:
+    cmd: Rscript pipeline/03-run_model.R
+    deps:
+      - pipeline/03-run_model.R
+      - data/interim/interim.parquet
+    outs:
       - data/models/model.RDS
+  plot_results:
+    cmd: Rscript -e "rmarkdown::render('pipeline/04-plot_results.Rmd', 'html_document', '../reports/notebooks/04-plot_results.html')" 
+    deps:
+      - pipeline/04-plot_results.Rmd
+      - data/models/model.RDS
+    outs:
+      - reports/figures/residuals.svg
+      - reports/tables/regression_table.tex
+      - reports/notebooks/04-plot_results.html

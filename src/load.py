@@ -1,7 +1,6 @@
 import pandas as pd
 
 import src
-from .preprocessing import preprocess
 
 
 def raw_data():
@@ -19,7 +18,7 @@ def raw_data():
 
     return df
 
+
 def processed_data():
-    df = raw_data()
-    df = preprocess(df, scale_y=True)
+    df = pd.read_parquet(src.PATH / "data/interim/interim.parquet")
     return df

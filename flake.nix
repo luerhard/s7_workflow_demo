@@ -53,6 +53,8 @@
           box
           here
           reticulate
+          stargazer
+          svglite
           tidyverse
         ];
 
