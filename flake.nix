@@ -31,6 +31,7 @@
           glibcLocales # get rid of error msgs "unable to set locale -- default to 'C'" in R
           R # necessary, otherwise no package is found in R
           pandoc
+          quarto
           ruff
         ];
 

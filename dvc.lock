@@ -10,18 +10,48 @@ stages:
       nfiles: 2
     - path: pipeline/01-basic_descriptives.ipynb
       hash: md5
-      md5: 4613d0dad01af3dd3ec27d52be0acc99
-      size: 7017
+      md5: 6390b40fd52fb63252ee5506514eab2b
+      size: 7100
     - path: src/load.py
       hash: md5
-      md5: ae8af8035f4218aa3f6656e18642013a
-      size: 430
+      md5: edd09b334f820abb7c8e40bf43243487
+      size: 563
     outs:
     - path: reports/notebooks/01-basic_descriptives.ipynb
       hash: md5
-      md5: f2684743b762d6f4e5c690a36113720f
-      size: 9223
+      md5: bfb1a0db9308cb3059741e1ff367cb81
+      size: 9477
     - path: reports/tables/raw_descriptives.csv
       hash: md5
       md5: d2dd9e44e03709237ed655629fa291f6
       size: 1029
+  run_model:
+    cmd: Rscript -e "rmarkdown::render('pipeline/02-run_model.Rmd', 'html_document',
+      '../reports/notebooks/02-run_model.html')"
+    deps:
+    - path: data/raw/
+      hash: md5
+      md5: 8ddad17a20060e3aba36b26102bf8da3.dir
+      size: 812969
+      nfiles: 2
+    - path: pipeline/02-run_model.Rmd
+      hash: md5
+      md5: 545ea4de205d5a47e36bbb02fb9d77c5
+      size: 582
+    - path: src/load.py
+      hash: md5
+      md5: edd09b334f820abb7c8e40bf43243487
+      size: 563
+    - path: src/preprocessing.py
+      hash: md5
+      md5: edf9620c4526be030e44eb1830964de7
+      size: 208
+    outs:
+    - path: data/models/model.RDS
+      hash: md5
+      md5: a160c545cbd5fbefc2bc58940c0797a5
+      size: 1234225
+    - path: reports/notebooks/02-run_model.html
+      hash: md5
+      md5: 1f8d71594d137fbce5b89846490c81c1
+      size: 698882

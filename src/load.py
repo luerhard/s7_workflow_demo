@@ -1,6 +1,7 @@
 import pandas as pd
 
 import src
+from .preprocessing import preprocess
 
 
 def raw_data():
@@ -16,4 +17,9 @@ def raw_data():
 
     df = pd.concat([features, target], axis=1)
 
+    return df
+
+def processed_data():
+    df = raw_data()
+    df = preprocess(df, scale_y=True)
     return df

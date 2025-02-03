@@ -15,3 +15,6 @@ stages:
       - data/raw/
       - src/load.py
       - src/preprocessing.py
+    outs:
+      - reports/notebooks/02-run_model.html
+      - data/models/model.RDS

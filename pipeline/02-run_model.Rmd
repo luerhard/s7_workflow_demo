@@ -1,0 +1,42 @@
+---
+title: "Regression Analysis"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(here)
+knitr::opts_chunk$set(echo = TRUE)
+options(box.path = here())
+
+box::use(
+    r / load
+)
+# box::reload(load)
+
+library(tidyverse)
+theme_set(theme_minimal())
+
+df <- load$processed_data()
+```
+
+```{r}
+names(df)
+```
+
+```{r}
+df |>
+    ggplot(aes(x=AveRooms)) +
+    geom_density(adjust=1.75)
+```
+
+```{r}
+simple_formula <- formula(y ~ MedInc + HouseAge + AveRooms)
+
+model <- lm(simple_formula, data = df)
+
+saveRDS(model, here("data", "models", "model.RDS"))
+```
+
+```{r}
+summary(model)
+```
