@@ -1,0 +1,17 @@
+stages:
+  raw_descriptives:
+    cmd: papermill pipeline/01-basic_descriptives.ipynb reports/notebooks/01-basic_descriptives.ipynb
+    deps:
+      - pipeline/01-basic_descriptives.ipynb
+      - src/load.py
+      - data/raw/
+    outs:
+      - reports/notebooks/01-basic_descriptives.ipynb
+      - reports/tables/raw_descriptives.csv
+  run_model:
+    cmd: Rscript -e "rmarkdown::render('pipeline/02-run_model.Rmd', 'html_document', '../reports/notebooks/02-run_model.html')"
+    deps:
+      - pipeline/02-run_model.Rmd
+      - data/raw/
+      - src/load.py
+      - src/preprocessing.py

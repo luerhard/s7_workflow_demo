@@ -1,0 +1,27 @@
+schema: '2.0'
+stages:
+  raw_descriptives:
+    cmd: papermill pipeline/01-basic_descriptives.ipynb reports/notebooks/01-basic_descriptives.ipynb
+    deps:
+    - path: data/raw/
+      hash: md5
+      md5: 8ddad17a20060e3aba36b26102bf8da3.dir
+      size: 812969
+      nfiles: 2
+    - path: pipeline/01-basic_descriptives.ipynb
+      hash: md5
+      md5: 4613d0dad01af3dd3ec27d52be0acc99
+      size: 7017
+    - path: src/load.py
+      hash: md5
+      md5: ae8af8035f4218aa3f6656e18642013a
+      size: 430
+    outs:
+    - path: reports/notebooks/01-basic_descriptives.ipynb
+      hash: md5
+      md5: f2684743b762d6f4e5c690a36113720f
+      size: 9223
+    - path: reports/tables/raw_descriptives.csv
+      hash: md5
+      md5: d2dd9e44e03709237ed655629fa291f6
+      size: 1029
