@@ -67,7 +67,8 @@
             pandas
             matplotlib
             scikit-learn
-          ] ++ dvc.optional-dependencies.s3
+          ] ++ pandas.optional-dependencies.parquet
+            ++ dvc.optional-dependencies.s3
         );
 
       in
