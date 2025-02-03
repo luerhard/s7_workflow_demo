@@ -15,7 +15,6 @@
       system:
       let
 
-
         pkgs = import nixpkgs {
           inherit system;
           config = {
@@ -50,6 +49,7 @@
 
         # all R packages go here
         rEnv = with pkgs.rPackages; [
+          box
           here
           reticulate
           tidyverse
@@ -57,9 +57,10 @@
 
         # all python packages go here
         pythonEnv = pkgs.python311.withPackages (
-          ppkgs: with ppkgs; [
+          ppkgs:
+          with ppkgs;
+          [
             pip # important for reticulate
-            jupyter # important for ipykernel dependencies. Otherwise papermill stuff gets on path.
             ipykernel # important for jupyter integration
             papermill
             dvc
@@ -67,8 +68,9 @@
             pandas
             matplotlib
             scikit-learn
-          ] ++ pandas.optional-dependencies.parquet
-            ++ dvc.optional-dependencies.s3
+          ]
+          ++ pandas.optional-dependencies.parquet
+          ++ dvc.optional-dependencies.s3
         );
 
       in
@@ -81,7 +83,7 @@
             systemDeps
           ];
 
-          ldLibPath = if system == "x86_64-linux" then "${pkgs.linuxPackages.nvidia_x11}/lib" else "";
+          # ldLibPath = if system == "x86_64-linux" then "${pkgs.linuxPackages.nvidia_x11}/lib" else "";
           pythonLibPath = "${pythonEnv}/lib/python3.11/site-packages/";
 
           shellHook = ''
