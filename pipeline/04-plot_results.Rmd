@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
 options(box.path = here())
 
 box::use(
-    r / load
+  r / load
 )
 # box::reload(load)
 
@@ -21,14 +21,25 @@ model <- readRDS(here("data", "models", "model.RDS"))
 ```
 
 ```{r}
+# stargazer(
+#   model,
+#   type = "text",
+#   title = "Regression Results",
+#   dep.var.labels = c("y"),
+#   omit.stat = c("ser", "f"),
+#   no.space = TRUE
+# )
+```
+
+```{r}
 tex_table <- stargazer(
-  model, 
+  model,
   type = "latex",
   out = here("reports", "tables", "regression_table.tex"),
   title = "Regression Results",
   label = "tab:regression",
   dep.var.labels = c("y"),
-  omit.stat = c("ser","f"),
+  omit.stat = c("ser", "f"),
   no.space = TRUE
 )
 ```
@@ -42,13 +53,13 @@ df <- data.frame(
 
 ```{r}
 plot <- df |>
-    ggplot(aes(x = fitted, y = residuals)) + 
-    geom_point() +
-    geom_hline(yintercept = 0, color = "red", linetype = "dashed")
+  ggplot(aes(x = fitted, y = residuals)) +
+  geom_point() +
+  geom_hline(yintercept = 0, color = "red", linetype = "dashed")
 
 plot
 ```
 
 ```{r}
-ggsave(here("reports", "figures", "residuals.svg"), width=5, height=4)
+ggsave(here("reports", "figures", "residuals.svg"), width = 5, height = 4)
 ```

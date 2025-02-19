@@ -17,9 +17,6 @@
 
         pkgs = import nixpkgs {
           inherit system;
-          config = {
-            allowUnfree = true; # necessary for CUDA
-          };
           overlays = [
             (import ./nix/python-overlay.nix)
           ];
@@ -33,22 +30,11 @@
           pandoc
         ];
 
-        # Linux CUDA deps.
-        # linuxCudaDeps =
-        #   if system == "x86_64-linux" then
-        #     with pkgs;
-        #     [
-        #       cudatoolkit
-        #       linuxPackages.nvidia_x11
-        #       cudaPackages.cudnn
-        #     ]
-        #   else
-        #     [ ];
-
         # all R packages go here
         rEnv = with pkgs.rPackages; [
           box
           here
+          languageserver
           reticulate
           stargazer
           svglite
@@ -77,16 +63,13 @@
           packages = [
             pythonEnv 
             rEnv
-            # linuxCudaDeps
             systemDeps
           ];
 
-          # ldLibPath = if system == "x86_64-linux" then "${pkgs.linuxPackages.nvidia_x11}/lib" else "";
           pythonLibPath = "${pythonEnv}/lib/python3.11/site-packages/";
 
           shellHook = ''
                       export PYTHONPATH="$(pwd):$pythonLibPath:$PYTHONPATH"
-                      # export LD_LIBRARY_PATH="$ldLibPath:$LD_LIBRARY_PATH"
                       export RETICULATE_PYTHON=$(which python)
             	  '';
         };

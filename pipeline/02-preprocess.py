@@ -8,6 +8,7 @@ def preprocess():
     df = src.load.raw_data()
     scaler = StandardScaler()
     df["y"] = scaler.fit_transform(df[["y"]])
+    # df["y"] = df["y"] + 10
     return df
 
 

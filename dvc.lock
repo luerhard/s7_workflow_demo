@@ -30,8 +30,8 @@ stages:
     deps:
     - path: data/interim/interim.parquet
       hash: md5
-      md5: 1eb7bf21904327bfc5d445dc9c4f6b28
-      size: 826062
+      md5: 5c2c73e0176bd9b1b22fb0633594c5c2
+      size: 825839
     - path: pipeline/03-run_model.R
       hash: md5
       md5: 3e168a8cc3050702db490dc9f848bd31
@@ -39,8 +39,8 @@ stages:
     outs:
     - path: data/models/model.RDS
       hash: md5
-      md5: a160c545cbd5fbefc2bc58940c0797a5
-      size: 1234225
+      md5: 71fdfe10222f666090a7bf156afa73c8
+      size: 1234406
   preprocess:
     cmd: python pipeline/02-preprocess.py
     deps:
@@ -51,35 +51,35 @@ stages:
       nfiles: 2
     - path: pipeline/02-preprocess.py
       hash: md5
-      md5: 96342ed199128f6f3397af6816660f72
-      size: 328
+      md5: 12b943a5bf08623f04535a039c901d3e
+      size: 357
     outs:
     - path: data/interim/interim.parquet
       hash: md5
-      md5: 1eb7bf21904327bfc5d445dc9c4f6b28
-      size: 826062
+      md5: 5c2c73e0176bd9b1b22fb0633594c5c2
+      size: 825839
   plot_results:
     cmd: Rscript -e "rmarkdown::render('pipeline/04-plot_results.Rmd', 'html_document',
       '../reports/notebooks/04-plot_results.html')"
     deps:
     - path: data/models/model.RDS
       hash: md5
-      md5: a160c545cbd5fbefc2bc58940c0797a5
-      size: 1234225
+      md5: 71fdfe10222f666090a7bf156afa73c8
+      size: 1234406
     - path: pipeline/04-plot_results.Rmd
       hash: md5
-      md5: d097c152abf8b5b200bbe3b24615d010
-      size: 925
+      md5: cbfcaaaad557b96286f403489f9ec637
+      size: 1093
     outs:
     - path: reports/figures/residuals.svg
       hash: md5
-      md5: ad340fbc1a2b10b60759a2a6199dfc3a
-      size: 1799982
+      md5: 52557c244a719b87d41fa234a29b28e7
+      size: 1799993
     - path: reports/notebooks/04-plot_results.html
       hash: md5
-      md5: 760d8fcc3222d5f9624e3d6afdaf665a
-      size: 759097
+      md5: 98a811b2918b7e434df2e90da8577e40
+      size: 727950
     - path: reports/tables/regression_table.tex
       hash: md5
-      md5: 72cd327a49921062f9428fee4ebac22b
-      size: 869
+      md5: c0b30112b73a8c442c85acc02696458c
+      size: 868
