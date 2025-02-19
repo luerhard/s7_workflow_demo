@@ -57,30 +57,62 @@
   )
 )
 
-#set text(font: ("SF Camera", "Cantarell"))
-#set list(tight: false, marker: ([•], [--]))
+// #set text(font: ("SF Camera", "Cantarell"))
+#set text(font: "App")
+#set text(font: "Univers for UniS 55 Roman Rg")
+#set list(tight: false, marker: ([•], [--]), spacing: 19pt)
+#set enum(number-align: end + bottom, spacing: 19pt)
+
+
+#let miniheader(content, text-color: uniBlue) = {
+  set text(weight: "bold", fill: text-color, size: 30pt)
+  content
+  v(1pt)
+}
 
 #title-slide()
 
-= Problem 1
+= The Big Problem
 
-How to write code collaboratively
+How can we work on the same research project collaboratively?
 
 == Having multiple people work on code
 
-Being able to work on code with multiple people has major advantages
+#miniheader([Working on research together has major advantages])
 
-- The research is way faster
+- The research is faster
 - The code has less bugs
 - It keeps the research reproducible
 
-#pause
-#v(20pt)
-#bluebox([BUT WHAT ABOUT PYTHON VS R?????])
+== Requirements to work together
+
+#miniheader([What do we need to work together?])
+
+1. Same code
+2. Same data
+3. Same environment
+4. Code needs to be run in the same order
+
+= Problem 1
+
+Having the same code
+
+#block[
+  #v(20pt)
+  #set text(size: 18pt)
+  This is what git is for, so we can skip this issue...
+]
+
+== Knowledge requirement check
+
+#block[
+#set text(size: 36pt)
+- Do we all know what a `.gitignore` file is?
+]
 
 = Problem 2
 
-Keeping track of the data
+Having the same data
 
 #block[
   #v(20pt)
@@ -90,7 +122,52 @@ Keeping track of the data
 
 == Introduction to dvc as storage
 
-TODO: What is dvc?
+#miniheader([What is dvc?])
+
+- Tool (written in Python) that augments the functionality of git 
+- DVC stands for: *Data Version Control*
+- provides the commmand: *dvc*
+
+
+
+== How to add/track data with dvc
+
+#miniheader[command: dvc add \[path/to/file\]]
+- adds any file or folder to a `.gitignore` file
+- creates a `.dvc` file instead which is still tracked by git
+
+  - contains the md5-hash of the original file
+  - is used to keep dvc and git in sync
+
+- moves the file to `.dvc/cache/` and links to it from its original position
+
+#miniheader[command: dvc commit \[path/to/file\]]
+- if a file changes and you want to add the changes, run *dvc commit* to update it
+
+== How to push data with dvc
+
+#miniheader[command: dvc push]
+
+- pushes all dvc tracked data to a specified remote
+- There are many backends available, *we have our own*
+
+#miniheader[Consequences of this approach]
+
+The workflow for using git + dvc changes to:
+#block[
+#set enum(spacing: 8pt)
+1. dvc add / commit
+2. git add
+3. git commit
+4. dvc push
+5. git push
+]
+
+
+#focus-slide[
+  Demo Time: Introducing MinIO S3 Storage
+]
+
 
 = Problem 3
 

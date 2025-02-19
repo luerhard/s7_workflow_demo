@@ -31,12 +31,9 @@
           glibcLocales # get rid of error msgs "unable to set locale -- default to 'C'" in R
           R # necessary, otherwise no package is found in R
           pandoc
-          quarto
-          ruff
         ];
 
         # Linux CUDA deps.
-        # Currently broken for python312 (?) Mismatch in driver version.
         # linuxCudaDeps =
         #   if system == "x86_64-linux" then
         #     with pkgs;
@@ -66,21 +63,19 @@
             pip # important for reticulate
             ipykernel # important for jupyter integration
             papermill
-            dvc
             pytest
             pandas
             matplotlib
             scikit-learn
           ]
           ++ pandas.optional-dependencies.parquet
-          ++ dvc.optional-dependencies.s3
         );
 
       in
       {
         defaultPackage = pkgs.mkShell {
           packages = [
-            pythonEnv # needs to be @ top of list, so the correct python interpreter is exposed
+            pythonEnv 
             rEnv
             # linuxCudaDeps
             systemDeps
