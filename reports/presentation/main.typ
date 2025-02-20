@@ -1,47 +1,10 @@
-#import "@preview/touying:0.5.5": *
-#import themes.metropolis: *
+#import "@preview/touying:0.6.0": *
+#import "stuttgart.typ": *
 #import "@preview/fletcher:0.4.4" as fletcher: node, edge
 #import "@preview/showybox:2.0.1": showybox
 
-#let uniBlue = rgb("#004191")
-#let uniLightBlue = rgb("#00BEFF")
-#let uniGray = rgb("#3E444C")
-#let uniYellow = rgb("#FFD500")
 
-
-#let bluebox(..args) = {
-  let title = ""
-  let body = ""
-  if args.pos().len() > 1 {
-    title = args.pos().at(0)
-    body = args.pos().slice(1)
-  } else {
-    body = args.pos()
-  }
-  showybox(
-    frame: (
-      border-color: uniBlue.darken(10%),
-      title-color: uniBlue,
-      body-color: uniBlue.lighten(80%),
-    ),
-    title-style: (
-      color: white,
-      weight: "bold",
-      align: center
-    ),
-    body-style: (
-      color: black
-    ),
-    shadow: (
-      offset: 0pt,
-    ),
-    title: title,
-    ..body
-  )
-}
-
-
-#show: metropolis-theme.with(
+#show: stuttgart-theme.with(
   config-colors(
     primary: uniBlue,
     primary-light: uniLightBlue,
@@ -56,18 +19,6 @@
     logo: image("img/logos/logo_s7_bg_none.png", height: 60%)
   )
 )
-
-// #set text(font: ("SF Camera", "Cantarell"))
-#set text(font: "Univers for UniS 55 Roman Rg")
-#set list(tight: false, marker: ([•], [--]), spacing: 19pt)
-#set enum(number-align: end + bottom, spacing: 19pt)
-
-
-#let miniheader(content, text-color: uniBlue, size: 30pt) = {
-  set text(weight: "bold", fill: text-color, size: size)
-  content
-  v(1pt)
-}
 
 #title-slide()
 
@@ -230,7 +181,7 @@ With *dvc* you can create a DAG of all steps of your research pipeline
 - Re-runs only stages that have changed, used cached results for everything else
 - Result caches are shared by using dvc
 
-#bluebox([What does this mean?], [We can run different parts of the pipeline on different computers (e.g., parts of it on a cluster)!])
+#infobox[What does this mean?][We can run different parts of the pipeline on different computers (e.g., parts of it on a cluster)!]
 
 
 == A dvc pipeline
