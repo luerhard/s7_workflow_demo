@@ -30,8 +30,8 @@ stages:
     deps:
     - path: data/interim/interim.parquet
       hash: md5
-      md5: 5c2c73e0176bd9b1b22fb0633594c5c2
-      size: 825839
+      md5: 2347fb624723b5c6f95f68eedeab23ef
+      size: 826062
     - path: pipeline/03-run_model.R
       hash: md5
       md5: 3e168a8cc3050702db490dc9f848bd31
@@ -39,8 +39,8 @@ stages:
     outs:
     - path: data/models/model.RDS
       hash: md5
-      md5: 71fdfe10222f666090a7bf156afa73c8
-      size: 1234406
+      md5: dd5e0cc243c419a2361b25792691a96d
+      size: 1225382
   preprocess:
     cmd: python pipeline/02-preprocess.py
     deps:
@@ -51,21 +51,21 @@ stages:
       nfiles: 2
     - path: pipeline/02-preprocess.py
       hash: md5
-      md5: 12b943a5bf08623f04535a039c901d3e
-      size: 357
+      md5: 626b4d0c8b3ca97607b116aed8819417
+      size: 355
     outs:
     - path: data/interim/interim.parquet
       hash: md5
-      md5: 5c2c73e0176bd9b1b22fb0633594c5c2
-      size: 825839
+      md5: 2347fb624723b5c6f95f68eedeab23ef
+      size: 826062
   plot_results:
     cmd: Rscript -e "rmarkdown::render('pipeline/04-plot_results.Rmd', 'html_document',
       '../reports/notebooks/04-plot_results.html')"
     deps:
     - path: data/models/model.RDS
       hash: md5
-      md5: 71fdfe10222f666090a7bf156afa73c8
-      size: 1234406
+      md5: dd5e0cc243c419a2361b25792691a96d
+      size: 1225382
     - path: pipeline/04-plot_results.Rmd
       hash: md5
       md5: cbfcaaaad557b96286f403489f9ec637
@@ -73,13 +73,13 @@ stages:
     outs:
     - path: reports/figures/residuals.svg
       hash: md5
-      md5: 52557c244a719b87d41fa234a29b28e7
-      size: 1799993
+      md5: badd296b1b52d9087761fa3685297a91
+      size: 1799983
     - path: reports/notebooks/04-plot_results.html
       hash: md5
-      md5: 98a811b2918b7e434df2e90da8577e40
-      size: 727950
+      md5: 9aa29cb69c0b46bec5fac8b0b5f0b504
+      size: 760344
     - path: reports/tables/regression_table.tex
       hash: md5
-      md5: c0b30112b73a8c442c85acc02696458c
-      size: 868
+      md5: 6ed57f93e1625d4b3a9cee9a3b68d5df
+      size: 866
